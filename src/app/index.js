@@ -13,7 +13,8 @@ class App extends React.Component {
                 atmosphere: {},
                 image: {},
                 item: {
-                    condition: {}
+                    condition: {},
+                    forecast: []
                 },
                 location: {},
                 units: {},
@@ -31,20 +32,29 @@ class App extends React.Component {
 
         request.get(url, (err, res) => {
             this.setState({ weather: res.body.query.results.channel });
-            console.log(res.body.query);
+            console.dir(res.body.query.results.channel.item.forecast);
         });
     }
 
     render() {
         const weather = this.state.weather;
+        const forecast = this.state.weather.item.forecast.map((dailyForecast, key) => {
+            return (
+                <li key={key}>{dailyForecast.day} - {dailyForecast.date} - Low: {dailyForecast.low} - High: {dailyForecast.high}</li>
+            )
+        });
 
         return (
             <div className="container">
-                <h1>Hello!</h1>
+                <h1>Weather App</h1>
                 <p className="weather"> Description: {weather.description}</p>
                 <p> Language: {weather.language}</p>
                 <p> Sunrise: {weather.astronomy.sunrise}</p>
                 <p> Sunset: {weather.astronomy.sunset}</p>
+                <div>
+                    <h2> Forecast </h2>
+                    {forecast}
+                </div>
                 <h3>Atmosphere</h3>
                 <p> Humidity: {weather.atmosphere.humidity}</p>
                 <p> Date: {weather.lastBuildDate}</p>
