@@ -2,4 +2,28 @@
     h1 {
         color: green;
     }
+
+    ul, menu, dir {
+        -webkit-padding-start: 0;
+        padding: 5px;
+    }
+}
+
+.forecast {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.forecast-detail {
+    border: 2px solid black;
+
+    p {
+        text-align: left;
+        width: 100%;
+    }
+}
+
+.text {
+    text-align: center;
 }

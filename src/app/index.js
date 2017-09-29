@@ -14,7 +14,8 @@ class App extends React.Component {
                 image: {},
                 item: {
                     condition: {},
-                    forecast: []
+                    forecast: [],
+                    description: ""
                 },
                 location: {},
                 units: {},
@@ -38,11 +39,29 @@ class App extends React.Component {
 
     render() {
         const weather = this.state.weather;
+        var myregpatternthing = /<img src="(.*)"\/>/g;
+        const imageArray = myregpatternthing.exec(weather.item.description) || [];
+        let image = "";
+
+
+
+        if (imageArray.length) {
+            image = imageArray[1];
+        }
+
+
         const forecast = this.state.weather.item.forecast.map((dailyForecast, key) => {
             return (
-                <li key={key}>{dailyForecast.day} - {dailyForecast.date} - Low: {dailyForecast.low} - High: {dailyForecast.high}</li>
+                <div className="forecast" key={key}>
+                    <ul className="forecast-detail">
+                        <p> {dailyForecast.day} - {dailyForecast.date}</p>
+                        <p> Low: {dailyForecast.low} High: {dailyForecast.high} </p>
+                    </ul>
+                </div>
             )
         });
+        console.log(weather);
+        console.log(image);
 
         return (
             <div className="container">
@@ -51,8 +70,8 @@ class App extends React.Component {
                 <p> Language: {weather.language}</p>
                 <p> Sunrise: {weather.astronomy.sunrise}</p>
                 <p> Sunset: {weather.astronomy.sunset}</p>
-                <div>
-                    <h2> Forecast </h2>
+                <h2> Forecast </h2>
+                <div className="forecast">
                     {forecast}
                 </div>
                 <h3>Atmosphere</h3>
@@ -62,6 +81,7 @@ class App extends React.Component {
                 <p> Temperature:
                     {weather.item.condition.temp}
                     {weather.units.temperature}
+                    <img src={image} />
                 </p>
                 <p>
                     <img alt="ad" src="http://l.yimg.com/a/i/brand/purplelogo//uh/us/news-wea.gif" />
