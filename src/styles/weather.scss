@@ -1,3 +1,8 @@
+.app-info,
+.today-info {
+    text-align: center;
+}
+
 .container {
     h1 {
         color: green;
@@ -7,23 +12,37 @@
         -webkit-padding-start: 0;
         padding: 5px;
     }
-}
-
-.forecast {
     display: flex;
-    flex-direction: row;
     justify-content: center;
+    flex-direction: column;
 }
 
-.forecast-detail {
+.today-info {
     border: 2px solid black;
+}
 
-    p {
-        text-align: left;
-        width: 100%;
+.forecast-info {
+    border: 2px solid red;
+    h3 {
+        text-align: center;
+    }
+
+    .forecast {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .forecast-detail {
+        border: 2px solid black;
+        p {
+            text-align: center;
+            width: 100%;
+        }
     }
 }
 
-.text {
-    text-align: center;
+.yahoo-ad {
+    display: flex;
+    justify-content: center;
 }

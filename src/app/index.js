@@ -11,15 +11,18 @@ class App extends React.Component {
             weather: {
                 astronomy: {},
                 atmosphere: {},
-                image: {},
+                image: {
+                    url: ""
+                },
                 item: {
                     condition: {},
                     forecast: [],
-                    description: ""
+                    description: "",
                 },
                 location: {},
                 units: {},
-                wind: {}
+                wind: {},
+                lastBuildDate: {}
             }
         };
     }
@@ -39,18 +42,33 @@ class App extends React.Component {
 
     render() {
         const weather = this.state.weather;
-        var myregpatternthing = /<img src="(.*)"\/>/g;
-        const imageArray = myregpatternthing.exec(weather.item.description) || [];
-        let image = "";
 
+        const temp = weather.item.condition.temp;
+        const fahrenheit = temp;
+        const celsius = Math.round(((fahrenheit - 32) * 5) / 9);
 
+        var dateRegEx = /(\w{3})\,\s(\d{2})\s(\w{3})\s(\d{4})/g;
+        const dateMod = dateRegEx.exec(weather.lastBuildDate) || [];
+        let dateItem = "";
+            if (dateMod.length) {
+                dateItem = dateMod[0];
+            }
 
-        if (imageArray.length) {
-            image = imageArray[1];
-        }
+        var timeRegEx = /(\d{2})\:(\d{2})\s(\w{2})/g;
+        const timeMod = timeRegEx.exec(weather.lastBuildDate) || [];
+        let timeItem = "";
+            if (timeMod.length) {
+                timeItem = timeMod[0];
+            }
 
+        var imgRegEx = /<img src="(.*)"\/>/g;
+        const imageArray = imgRegEx.exec(weather.item.description) || [];
+        let imageItem = "";
+            if (imageArray.length) {
+                imageItem = imageArray[1];
+            }
 
-        const forecast = this.state.weather.item.forecast.map((dailyForecast, key) => {
+        const forecast = weather.item.forecast.map((dailyForecast, key) => {
             return (
                 <div className="forecast" key={key}>
                     <ul className="forecast-detail">
@@ -61,31 +79,40 @@ class App extends React.Component {
             )
         });
         console.log(weather);
-        console.log(image);
+        console.log(weather.item.description);
+        console.log(weather.lastBuildDate);
 
         return (
             <div className="container">
-                <h1>Weather App</h1>
-                <p className="weather"> Description: {weather.description}</p>
-                <p> Language: {weather.language}</p>
-                <p> Sunrise: {weather.astronomy.sunrise}</p>
-                <p> Sunset: {weather.astronomy.sunset}</p>
-                <h2> Forecast </h2>
-                <div className="forecast">
-                    {forecast}
+                <div className="app-info">
+                    <h1>Weather App</h1>
+                    <p> {weather.description}</p>
                 </div>
-                <h3>Atmosphere</h3>
-                <p> Humidity: {weather.atmosphere.humidity}</p>
-                <p> Date: {weather.lastBuildDate}</p>
-                <p> Wind Chill: {weather.wind.chill}</p>
-                <p> Temperature:
-                    {weather.item.condition.temp}
-                    {weather.units.temperature}
-                    <img src={image} />
-                </p>
-                <p>
-                    <img alt="ad" src="http://l.yimg.com/a/i/brand/purplelogo//uh/us/news-wea.gif" />
-                </p>
+                <div className="today-info">
+                    <img src={imageItem} />
+                    <p> Date: {dateItem} </p>
+                    <p> Weather Last Updated At: {timeItem} </p>
+                    <p className="temperature">
+                        Temperature: {celsius} C
+                    </p>
+                    <p>
+                        Sunrise: {weather.astronomy.sunrise} -
+                        Sunset: {weather.astronomy.sunset}
+                    </p>
+                    <p>
+                        Humidity: {weather.atmosphere.humidity} -
+                        Wind Chill: {weather.wind.chill}
+                    </p>
+                </div>
+                <div className="forecast-info">
+                    <h3> 10 Day Forecast </h3>
+                    <div className="forecast">
+                        {forecast}
+                    </div>
+                </div>
+                <div className="yahoo-ad">
+                    <img src={weather.image.url} />
+                </div>
             </div>
         );
     }
