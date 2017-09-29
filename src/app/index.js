@@ -15,7 +15,9 @@ class App extends React.Component {
                     url: ""
                 },
                 item: {
-                    condition: {},
+                    condition: {
+                        text: ""
+                    },
                     forecast: [],
                     description: "",
                 },
@@ -40,11 +42,13 @@ class App extends React.Component {
         });
     }
 
+
+
     render() {
         const weather = this.state.weather;
+        const conditions = weather.item.condition.text;
 
-        const temp = weather.item.condition.temp;
-        const fahrenheit = temp;
+        const fahrenheit = weather.item.condition.temp;
         const celsius = Math.round(((fahrenheit - 32) * 5) / 9);
 
         var dateRegEx = /(\w{3})\,\s(\d{2})\s(\w{3})\s(\d{4})/g;
@@ -78,9 +82,8 @@ class App extends React.Component {
                 </div>
             )
         });
-        console.log(weather);
+
         console.log(weather.item.description);
-        console.log(weather.lastBuildDate);
 
         return (
             <div className="container">
@@ -90,6 +93,7 @@ class App extends React.Component {
                 </div>
                 <div className="today-info">
                     <img src={imageItem} />
+                    <p> Current Conditions: {conditions} </p>
                     <p> Date: {dateItem} </p>
                     <p> Weather Last Updated At: {timeItem} </p>
                     <p className="temperature">
