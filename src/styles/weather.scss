@@ -32,13 +32,21 @@
 .forecast-info {
     .forecast {
         flex-direction: row;
+        border: 2px solid black;
+    }
+
+    .forecast:nth-child(odd) {
+        background-color: #B8BCC1;
     }
 
     .forecast-detail {
-        border: 2px solid black;
         p {
             width: 100%;
         }
     }
+}
+
+.yahoo-ad {
+    margin-top: 30px;
 }
 

@@ -50,14 +50,22 @@ class App extends React.Component {
             });
     }
 
-
-
     render() {
+        function calculateCelsius (fahrenheit) {
+            const fTemp = fahrenheit;
+            const fToC = Math.round(((fTemp - 32) * 5) / 9);
+            return fToC;
+        };
+
+        function calculateFahrenheit (celsius) {
+            const cTemp = celsius;
+            const cToF = Math.round(cTemp * 9 / 5 + 32);
+            return cToF;
+        };
+
         const weather = this.state.weather;
         const conditions = weather.item.condition.text;
-
         const fahrenheit = weather.item.condition.temp;
-        const celsius = Math.round(((fahrenheit - 32) * 5) / 9);
 
         var dateRegEx = /(\w{3})\,\s(\d{2})\s(\w{3})\s(\d{4})/g;
         const dateMod = dateRegEx.exec(weather.lastBuildDate) || [];
@@ -85,13 +93,11 @@ class App extends React.Component {
                 <div className="forecast" key={key}>
                     <ul className="forecast-detail">
                         <p> {dailyForecast.day} - {dailyForecast.date}</p>
-                        <p> Low: {dailyForecast.low} High: {dailyForecast.high} </p>
+                        <p> Low: {dailyForecast.low}&deg; High: {dailyForecast.high}&deg; </p>
                     </ul>
                 </div>
             )
         });
-
-        console.log(weather.item.description);
 
         return (
             <div className="container">
@@ -105,7 +111,7 @@ class App extends React.Component {
                     <p> Date: {dateItem} </p>
                     <p> Weather Last Updated At: {timeItem} </p>
                     <p className="temperature">
-                        Temperature: {celsius}&deg; C
+                        Temperature: {calculateCelsius(fahrenheit)}&deg; C
                     </p>
                     <p>
                         Sunrise: {weather.astronomy.sunrise} -
