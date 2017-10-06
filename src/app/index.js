@@ -45,6 +45,9 @@ class App extends React.Component {
                 <Weather />
                 <Gif onTermChange={this.handleTermChange.bind(this)} />
                 <GifList gifs={this.state.gifs} />
+                <GifModal modalIsOpen={this.state.modalIsOpen}
+                          selectedGif={this.state.selectedGif}
+                          onRequestClose={ () => this.closeModal() } />
             </div>
         );
     }
