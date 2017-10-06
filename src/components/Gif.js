@@ -15,7 +15,6 @@ class Gif extends React.Component {
         return (
             <div className="gif-container">
                 <input onChange={event => this.onInputChange(event.target.value)} />
-                <h1> Hi </h1>
             </div>
         )
     }

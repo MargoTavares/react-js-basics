@@ -12,10 +12,24 @@ class App extends React.Component {
 
         this.state = {
             gifs: []
+            // selectedGif: null,
+            // modalIsOpen: false
         };
-
-        this.handleTermChange = this.handleTermChange.bind(this);
     }
+
+    // openModal(gif) {
+    //     this.setState({
+    //         modalIsOpen: true,
+    //         selectedGif: gif
+    //     });
+    // }
+
+    // closeModal() {
+    //     this.setState({
+    //         modalIsOpen: false,
+    //         selectedGif: null
+    //     });
+    // }
 
     handleTermChange(term) {
         const url = `http://api.giphy.com/v1/gifs/search?q=${term.replace(/\s/g, '+')}&api_key=dc6zaTOxFJmzC`;
@@ -28,7 +42,7 @@ class App extends React.Component {
         return (
             <div>
                 <Weather />
-                <Gif onTermChange={this.handleTermChange} />
+                <Gif onTermChange={this.handleTermChange.bind(this)} />
                 <GifList gifs={this.state.gifs} />
             </div>
         );
