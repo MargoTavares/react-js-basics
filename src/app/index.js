@@ -2,8 +2,9 @@ import React from "react";
 import { render } from "react-dom";
 import style from "../styles/main.scss";
 import Gif from "../components/Gif.js";
-import Weather from "../components/Weather.js"
+import Weather from "../components/Weather.js";
 import GifList from "../components/GifList.js";
+import GifModal from "../components/GifModal.js";
 import request from 'superagent';
 
 class App extends React.Component {
@@ -11,25 +12,25 @@ class App extends React.Component {
         super();
 
         this.state = {
-            gifs: []
-            // selectedGif: null,
-            // modalIsOpen: false
+            gifs: [],
+            selectedGif: null,
+            modalIsOpen: false
         };
     }
 
-    // openModal(gif) {
-    //     this.setState({
-    //         modalIsOpen: true,
-    //         selectedGif: gif
-    //     });
-    // }
+    openModal(gif) {
+        this.setState({
+            modalIsOpen: true,
+            selectedGif: gif
+        });
+    }
 
-    // closeModal() {
-    //     this.setState({
-    //         modalIsOpen: false,
-    //         selectedGif: null
-    //     });
-    // }
+    closeModal() {
+        this.setState({
+            modalIsOpen: false,
+            selectedGif: null
+        });
+    }
 
     handleTermChange(term) {
         const url = `http://api.giphy.com/v1/gifs/search?q=${term.replace(/\s/g, '+')}&api_key=dc6zaTOxFJmzC`;
