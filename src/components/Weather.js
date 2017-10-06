@@ -90,8 +90,8 @@ class Weather extends React.Component {
                     <ul className="forecast-detail">
                         <p> {dailyForecast.day} - {dailyForecast.date}</p>
                         <p>
-                            Low: {calculateCelsius(dailyForecast.low)}&deg;
-                            High: {calculateCelsius(dailyForecast.high)}&deg;
+                            Low: {calculateCelsius(dailyForecast.low)}&deg;C
+                            High: {calculateCelsius(dailyForecast.high)}&deg;C
                         </p>
                     </ul>
                 </div>
@@ -113,7 +113,7 @@ class Weather extends React.Component {
                     <p> Date: {dateItem} </p>
                     <p> Weather Last Updated At: {timeItem} </p>
                     <p className="temperature">
-                        Temperature: {calculateCelsius(fahrenheit)}&deg; C
+                        Temperature: {calculateCelsius(fahrenheit)}&deg;C
                     </p>
                     <p>
                         Sunrise: {weather.astronomy.sunrise} -
@@ -121,7 +121,7 @@ class Weather extends React.Component {
                     </p>
                     <p>
                         Humidity: {weather.atmosphere.humidity}% -
-                        Wind Chill: {calculateCelsius(weather.wind.chill)}&deg;F
+                        Wind Chill: {calculateCelsius(weather.wind.chill)}&deg;C
                     </p>
                 </div>
                 <div className="forecast-info">
@@ -133,7 +133,6 @@ class Weather extends React.Component {
                 <div className="yahoo-ad">
                     <img src={weather.image.url} />
                 </div>
-
             </div>
         );
     }

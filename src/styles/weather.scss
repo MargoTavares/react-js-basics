@@ -13,6 +13,8 @@
 }
 
 .container {
+    border: 2px solid blue;
+    border-radius: 10px;
     h1 {
         color: darkblue;
     }
@@ -50,5 +52,6 @@
 
 .yahoo-ad {
     margin-top: 30px;
+    margin-bottom: 30px;
 }
 
