@@ -2,7 +2,6 @@ import React from "react";
 import { render } from "react-dom";
 import style from "../styles/main.scss";
 import request from 'superagent';
-// import OAuth from "./OAuth.js";
 
 class App extends React.Component {
     constructor() {
@@ -46,7 +45,6 @@ class App extends React.Component {
             })
             .end((err, res) => {
                 this.setState({ weather: res.body.query.results.channel });
-                console.dir(res.body.query.results.channel.item.forecast);
             });
     }
 
@@ -93,11 +91,17 @@ class App extends React.Component {
                 <div className="forecast" key={key}>
                     <ul className="forecast-detail">
                         <p> {dailyForecast.day} - {dailyForecast.date}</p>
-                        <p> Low: {dailyForecast.low}&deg; High: {dailyForecast.high}&deg; </p>
+                        <p>
+                            Low: {calculateCelsius(dailyForecast.low)}&deg;
+                            High: {calculateCelsius(dailyForecast.high)}&deg;
+                        </p>
                     </ul>
                 </div>
             )
         });
+
+        console.log('wind chill:', weather.wind.chill);
+        const windChill = weather.wind.chill;
 
         return (
             <div className="container">
@@ -119,7 +123,7 @@ class App extends React.Component {
                     </p>
                     <p>
                         Humidity: {weather.atmosphere.humidity}% -
-                        Wind Chill: {weather.wind.chill}&deg;F
+                        Wind Chill: {calculateCelsius(weather.wind.chill)}&deg;F
                     </p>
                 </div>
                 <div className="forecast-info">
