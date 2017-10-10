@@ -14,7 +14,8 @@ class Gif extends React.Component {
     render() {
         return (
             <div className="gif-container">
-                <input onChange={event => this.onInputChange(event.target.value)} />
+                <input placeholder="Search for gifs here"
+                       onChange={event => this.onInputChange(event.target.value)} />
             </div>
         )
     }

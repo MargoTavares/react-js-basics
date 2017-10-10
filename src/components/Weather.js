@@ -50,14 +50,24 @@ class Weather extends React.Component {
         function calculateCelsius(fahrenheit) {
             const fTemp = fahrenheit;
             const fToC = Math.round(((fTemp - 32) * 5) / 9);
-            return fToC;
+            return <span> {fToC}&deg;C </span>;
         };
 
         function calculateFahrenheit(celsius) {
             const cTemp = celsius;
             const cToF = Math.round(cTemp * 9 / 5 + 32);
-            return cToF;
+            return <span> {cToF}&deg;F </span>;
         };
+
+        function change(calculateCelsius, calculateFahrenheit) {
+            const temp = this.state.weather.item.condition.temp;
+            if(temp > 40){
+                return calculateCelsius;
+            } else {
+                return calculateFahrenheit;
+            }
+            console.log(temp);
+        }
 
         const weather = this.state.weather;
         const conditions = weather.item.condition.text;
@@ -90,15 +100,14 @@ class Weather extends React.Component {
                     <ul className="forecast-detail">
                         <p> {dailyForecast.day} - {dailyForecast.date}</p>
                         <p>
-                            Low: {calculateCelsius(dailyForecast.low)}&deg;C
-                            High: {calculateCelsius(dailyForecast.high)}&deg;C
+                            Low: {calculateCelsius(dailyForecast.low)}
+                            High: {calculateCelsius(dailyForecast.high)}
                         </p>
                     </ul>
                 </div>
             )
         });
 
-        console.log('wind chill:', weather.wind.chill);
         const windChill = weather.wind.chill;
 
         return (
@@ -113,7 +122,7 @@ class Weather extends React.Component {
                     <p> Date: {dateItem} </p>
                     <p> Weather Last Updated At: {timeItem} </p>
                     <p className="temperature">
-                        Temperature: {calculateCelsius(fahrenheit)}&deg;C
+                        Temperature: {calculateCelsius(fahrenheit)}
                     </p>
                     <p>
                         Sunrise: {weather.astronomy.sunrise} -
@@ -121,7 +130,13 @@ class Weather extends React.Component {
                     </p>
                     <p>
                         Humidity: {weather.atmosphere.humidity}% -
-                        Wind Chill: {calculateCelsius(weather.wind.chill)}&deg;C
+                        Wind Chill:
+                            <span className="wind-chill">
+                                {calculateCelsius(windChill)}
+                            </span>
+                            <button onClick={change}>
+                                Click me
+                            </button>
                     </p>
                 </div>
                 <div className="forecast-info">
