@@ -49,7 +49,7 @@ class Weather extends React.Component {
     render() {
         const calculateCelsius = ((fahrenheit) => {
             const fToC = Math.round(((fahrenheit - 32) * 5) / 9);
-            return <span> {fToC}&deg;C </span>;
+            return `${fToC} ${String.fromCharCode(176)} C`;
         });
 
         const calculateFahrenheit = ((celsius) => {
