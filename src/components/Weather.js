@@ -47,27 +47,21 @@ class Weather extends React.Component {
     }
 
     render() {
-        function calculateCelsius(fahrenheit) {
-            const fTemp = fahrenheit;
-            const fToC = Math.round(((fTemp - 32) * 5) / 9);
+        const calculateCelsius = ((fahrenheit) => {
+            const fToC = Math.round(((fahrenheit - 32) * 5) / 9);
             return <span> {fToC}&deg;C </span>;
-        };
+        });
 
-        function calculateFahrenheit(celsius) {
-            const cTemp = celsius;
-            const cToF = Math.round(cTemp * 9 / 5 + 32);
+        const calculateFahrenheit = ((celsius) => {
+            const cToF = Math.round(celsius * 9 / 5 + 32);
             return <span> {cToF}&deg;F </span>;
-        };
+        });
 
-        function change(calculateCelsius, calculateFahrenheit) {
-            const temp = this.state.weather.item.condition.temp;
-            if(temp > 40){
-                return calculateCelsius;
-            } else {
-                return calculateFahrenheit;
-            }
-            console.log(temp);
-        }
+        // function change(calculateCelsius, calculateFahrenheit, fahrenheit) {
+        //     const temp = 80;
+        //     temp > 40 ? calculateCelsius(fahrenheit) : calculateFahrenheit(fahrenheit);
+        //     console.log(fahrenheit);
+        // }
 
         const weather = this.state.weather;
         const conditions = weather.item.condition.text;
@@ -134,9 +128,7 @@ class Weather extends React.Component {
                             <span className="wind-chill">
                                 {calculateCelsius(windChill)}
                             </span>
-                            <button onClick={change}>
-                                Click me
-                            </button>
+
                     </p>
                 </div>
                 <div className="forecast-info">
