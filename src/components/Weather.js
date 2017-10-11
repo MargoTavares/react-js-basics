@@ -49,7 +49,7 @@ class Weather extends React.Component {
     render() {
         const calculateCelsius = ((fahrenheit) => {
             const fToC = Math.round(((fahrenheit - 32) * 5) / 9);
-            return `${fToC} ${String.fromCharCode(176)} C`;
+            return `${fToC}${String.fromCharCode(176)}C`;
         });
 
         const calculateFahrenheit = ((celsius) => {
@@ -128,7 +128,6 @@ class Weather extends React.Component {
                             <span className="wind-chill">
                                 {calculateCelsius(windChill)}
                             </span>
-
                     </p>
                 </div>
                 <div className="forecast-info">
