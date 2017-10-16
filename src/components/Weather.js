@@ -68,6 +68,7 @@ class Weather extends React.Component {
         const fahrenheit = weather.item.condition.temp;
 
         console.dir(this.state.weather)
+        console.dir(this.state.astronomy)
 
         var dateRegEx = /(\w{3})\,\s(\d{2})\s(\w{3})\s(\d{4})/g;
         const dateMod = dateRegEx.exec(weather.lastBuildDate) || [];
