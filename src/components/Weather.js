@@ -140,7 +140,6 @@ class Weather extends React.Component {
                     </div>
                 </div>
                 <div className="yahoo-ad">
-                    <img src={weather.image.url} />
                 </div>
             </div>
         );
