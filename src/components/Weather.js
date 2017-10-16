@@ -107,6 +107,41 @@ class Weather extends React.Component {
 
         const windChill = weather.wind.chill;
 
+
+
+        const url = 'https://pbs.twimg.com/profile_images/884146429/aqua_teen_hunger_force_colon_movie_film_for_theatres_004_400x400.jpg';
+//////////////////////////////
+// SYNCRONOUS /////////////
+        //function downloadPhotoSync()
+
+// ASYNCHRONOUS //////////////
+
+        function httpGetAsync(url, callback) {
+            var test = new XMLHttpRequest();
+            test.onreadystatechange = function () {
+                console.log('readystate:', test.readyState);
+                console.log('status:', test.status)
+                if (test.readyState == 4 && test.status == 200) {
+                    callback(url);
+                } else if (test.status >= 400) {
+                    console.error(test.status, test.statusText);
+                }
+            };
+            test.open("GET", url, true);
+            test.send(null);
+        };
+
+        function callback (url, error) {
+            console.log('Download started')
+            if (error) {
+                console.error('Download error!', error)
+            } else {
+                console.log('Download finished', url)
+                return url;
+            }
+        };
+/////////////////////
+
         return (
             <div className="container">
                 <div className="app-info">
@@ -140,6 +175,7 @@ class Weather extends React.Component {
                     </div>
                 </div>
                 <div className="yahoo-ad">
+                    <img src={httpGetAsync(url, callback)} />
                 </div>
             </div>
         );
