@@ -14,7 +14,8 @@ class Weather extends React.Component {
                 },
                 item: {
                     condition: {
-                        text: ""
+                        text: "",
+                        temp: {}
                     },
                     forecast: [],
                     description: "",
@@ -57,18 +58,18 @@ class Weather extends React.Component {
             return <span> {cToF}&deg;F </span>;
         });
 
-        // function change(calculateCelsius, calculateFahrenheit, fahrenheit) {
-        //     const temp = 80;
-        //     temp > 40 ? calculateCelsius(fahrenheit) : calculateFahrenheit(fahrenheit);
-        //     console.log(fahrenheit);
-        // }
+        const changeTemp = document.getElementById("changeMe");
+
+        function tempConverter(changeTemp) {
+            const oldtemp = changeTemp;
+            oldtemp > 40 ? calculateCelsius(oldtemp) : calculateFahrenheit(oldtemp);
+            return oldtemp;
+            console.log(fahrenheit);
+        }
 
         const weather = this.state.weather;
         const conditions = weather.item.condition.text;
         const fahrenheit = weather.item.condition.temp;
-
-        console.dir(this.state.weather)
-        console.dir(this.state.astronomy)
 
         var dateRegEx = /(\w{3})\,\s(\d{2})\s(\w{3})\s(\d{4})/g;
         const dateMod = dateRegEx.exec(weather.lastBuildDate) || [];
@@ -106,10 +107,11 @@ class Weather extends React.Component {
         });
 
         const windChill = weather.wind.chill;
+        console.log('weather', weather)
 
 //////////////////////////////
 
-        const url = 'https://pbs.twimg.com/profile_images/884146429/aqua_teen_hunger_force_colon_movie_film_for_theatres_004_400x400.jpg';
+        const url = 'https://pbs.twimg.com/profile_images/884146429/aqua_teen_hunger_force_colon_movie_film_for_theatres_004_200x200.jpg';
 
 // SYNCRONOUS /////////////
         // function httpGetSync(url) {
@@ -126,8 +128,6 @@ class Weather extends React.Component {
         function httpGetAsync(url, callback) {
             var test = new XMLHttpRequest();
             test.onreadystatechange = function () {
-                console.log('readystate:', test.readyState);
-                console.log('status:', test.status)
                 if (test.readyState == 4 && test.status == 200) {
                     callback(url);
                 } else if (test.status >= 400) {
@@ -148,11 +148,18 @@ class Weather extends React.Component {
         };
 /////////////////////
 
+        var temp = weather.item.condition.temp;
+
+        function temperatureConverter(valNum) {
+            valNum = parseFloat(valNum);
+            document.getElementById("outputCelcius").innerHTML = (valNum - 32) / 1.8;
+        }
+
         return (
             <div className="container">
                 <div className="app-info">
                     <h1>Weather App</h1>
-                    <p> {weather.description}</p>
+                    <p> {weather.description} </p>
                 </div>
                 <div className="today-info">
                     <img src={imageItem} />
@@ -160,7 +167,11 @@ class Weather extends React.Component {
                     <p> Date: {dateItem} </p>
                     <p> Weather Last Updated At: {timeItem} </p>
                     <p className="temperature">
-                        Temperature: {calculateCelsius(fahrenheit)}
+                        Temperature: <span id="changeMe">{calculateCelsius(fahrenheit)}</span>
+                        <button className="converter" onClick={() => this.props.tempConverter(temp)}> </button>
+                    </p>
+                    <p>
+                        <label>Fahrenheit</label>
                     </p>
                     <p>
                         Sunrise: {weather.astronomy.sunrise} -
