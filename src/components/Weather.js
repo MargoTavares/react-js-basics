@@ -2,8 +2,8 @@ import React from 'react';
 import request from 'superagent';
 
 class Weather extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             weather: {
@@ -48,28 +48,16 @@ class Weather extends React.Component {
     }
 
     render() {
-        const calculateCelsius = ((fahrenheit) => {
-            const fToC = Math.round(((fahrenheit - 32) * 5) / 9);
-            return `${fToC}${String.fromCharCode(176)}C`;
-        });
-
-        const calculateFahrenheit = ((celsius) => {
-            const cToF = Math.round(celsius * 9 / 5 + 32);
-            return <span> {cToF}&deg;F </span>;
-        });
-
-        const changeTemp = document.getElementById("changeMe");
-
-        function tempConverter(changeTemp) {
-            const oldtemp = changeTemp;
-            oldtemp > 40 ? calculateCelsius(oldtemp) : calculateFahrenheit(oldtemp);
-            return oldtemp;
-            console.log(fahrenheit);
-        }
-
         const weather = this.state.weather;
         const conditions = weather.item.condition.text;
         const fahrenheit = weather.item.condition.temp;
+        const windChill = weather.wind.chill;
+        const url = 'https://pbs.twimg.com/profile_images/884146429/aqua_teen_hunger_force_colon_movie_film_for_theatres_004_200x200.jpg';
+
+        const calculateCelsius = ((fahrenheit) => {
+            const fToC = Math.round(((fahrenheit - 32) * 5) / 9);
+            return `${fToC}`;
+        });
 
         var dateRegEx = /(\w{3})\,\s(\d{2})\s(\w{3})\s(\d{4})/g;
         const dateMod = dateRegEx.exec(weather.lastBuildDate) || [];
@@ -106,25 +94,6 @@ class Weather extends React.Component {
             )
         });
 
-        const windChill = weather.wind.chill;
-        console.log('weather', weather)
-
-//////////////////////////////
-
-        const url = 'https://pbs.twimg.com/profile_images/884146429/aqua_teen_hunger_force_colon_movie_film_for_theatres_004_200x200.jpg';
-
-// SYNCRONOUS /////////////
-        // function httpGetSync(url) {
-        //     var test = new XMLHttpRequest();
-        //     test.open("GET", url, false);
-        //     test.send(null);
-        //     console.log('sync response', test);
-        //     console.log('the url:', url);
-        //     return test;
-        // }
-
-// ASYNCHRONOUS //////////////
-
         function httpGetAsync(url, callback) {
             var test = new XMLHttpRequest();
             test.onreadystatechange = function () {
@@ -139,20 +108,25 @@ class Weather extends React.Component {
         };
 
         function callback (url, error) {
-            console.log('Download started')
             if (error) {
                 console.error('Download error!', error)
             } else {
                 document.getElementById('example').src = url;
             }
         };
-/////////////////////
 
-        var temp = weather.item.condition.temp;
-
-        function temperatureConverter(valNum) {
-            valNum = parseFloat(valNum);
-            document.getElementById("outputCelcius").innerHTML = (valNum - 32) / 1.8;
+        function changeButtonText(temp) {
+            temp = document.getElementById("changeMe").innerHTML;
+            const calculateCelsius = ((fahrenheit) => {
+                const fToC = Math.round(((fahrenheit - 32) * 5) / 9);
+                return `${fToC}${String.fromCharCode(176)}C`;
+            });
+            const calculateFahrenheit = ((celsius) => {
+                const cToF = Math.round(celsius * 9 / 5 + 32);
+                return `${cToF}${String.fromCharCode(176)}F`;
+            });
+            calculateFahrenheit(temp);
+            return document.getElementById("changeMe").innerHTML = calculateFahrenheit(temp);
         }
 
         return (
@@ -168,10 +142,9 @@ class Weather extends React.Component {
                     <p> Weather Last Updated At: {timeItem} </p>
                     <p className="temperature">
                         Temperature: <span id="changeMe">{calculateCelsius(fahrenheit)}</span>
-                        <button className="converter" onClick={() => this.props.tempConverter(temp)}> </button>
-                    </p>
-                    <p>
-                        <label>Fahrenheit</label>
+                        <button className="textChange" onClick={changeButtonText}>
+                            <span id="convertedTemp">{this.changeButtonText}</span>
+                        </button>
                     </p>
                     <p>
                         Sunrise: {weather.astronomy.sunrise} -
