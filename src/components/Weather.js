@@ -52,7 +52,7 @@ class Weather extends React.Component {
         const conditions = weather.item.condition.text;
         const fahrenheit = weather.item.condition.temp;
         const windChill = weather.wind.chill;
-        const url = 'https://pbs.twimg.com/profile_images/884146429/aqua_teen_hunger_force_colon_movie_film_for_theatres_004_200x200.jpg';
+        const url = 'https://static.bbc.co.uk/weathermobile/0.1.1212/images/responsive/icons/weather/vector/infographic/en/1.svg';
 
         const calculateCelsius = ((fahrenheit) => {
             const fToC = Math.round(((fahrenheit - 32) * 5) / 9);
@@ -115,18 +115,24 @@ class Weather extends React.Component {
             }
         };
 
-        function changeButtonText(temp) {
+        function changeToFahrenheit(temp) {
             temp = document.getElementById("changeMe").innerHTML;
-            const calculateCelsius = ((fahrenheit) => {
-                const fToC = Math.round(((fahrenheit - 32) * 5) / 9);
-                return `${fToC}${String.fromCharCode(176)}C`;
-            });
             const calculateFahrenheit = ((celsius) => {
                 const cToF = Math.round(celsius * 9 / 5 + 32);
-                return `${cToF}${String.fromCharCode(176)}F`;
+                return `${cToF}`;
             });
             calculateFahrenheit(temp);
             return document.getElementById("changeMe").innerHTML = calculateFahrenheit(temp);
+        }
+
+        function changeToCelsius(temp) {
+            temp = document.getElementById("changeMe").innerHTML;
+            const calculateCelsius = ((fahrenheit) => {
+                const fToC = Math.round(fahrenheit * 9 / 5 + 32);
+                return `${fToC}`;
+            });
+            calculateCelsius(temp);
+            return document.getElementById("changeMe").innerHTML = calculateCelsius(temp);
         }
 
         return (
@@ -142,8 +148,8 @@ class Weather extends React.Component {
                     <p> Weather Last Updated At: {timeItem} </p>
                     <p className="temperature">
                         Temperature: <span id="changeMe">{calculateCelsius(fahrenheit)}</span>
-                        <button className="textChange" onClick={changeButtonText}>
-                            <span id="convertedTemp">{this.changeButtonText}</span>
+                        <button className="textChange" onClick={changeToFahrenheit}>
+                            <span id="convertedTemp">{this.changeToFahrenheit}</span>
                         </button>
                     </p>
                     <p>
