@@ -2,8 +2,8 @@ import React from 'react';
 import request from 'superagent';
 
 class Weather extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             weather: {
@@ -14,7 +14,8 @@ class Weather extends React.Component {
                 },
                 item: {
                     condition: {
-                        text: ""
+                        text: "",
+                        temp: {}
                     },
                     forecast: [],
                     description: "",
@@ -47,28 +48,16 @@ class Weather extends React.Component {
     }
 
     render() {
-        const calculateCelsius = ((fahrenheit) => {
-            const fToC = Math.round(((fahrenheit - 32) * 5) / 9);
-            return `${fToC}${String.fromCharCode(176)}C`;
-        });
-
-        const calculateFahrenheit = ((celsius) => {
-            const cToF = Math.round(celsius * 9 / 5 + 32);
-            return <span> {cToF}&deg;F </span>;
-        });
-
-        // function change(calculateCelsius, calculateFahrenheit, fahrenheit) {
-        //     const temp = 80;
-        //     temp > 40 ? calculateCelsius(fahrenheit) : calculateFahrenheit(fahrenheit);
-        //     console.log(fahrenheit);
-        // }
-
         const weather = this.state.weather;
         const conditions = weather.item.condition.text;
         const fahrenheit = weather.item.condition.temp;
+        const windChill = weather.wind.chill;
+        const url = 'https://static.bbc.co.uk/weathermobile/0.1.1212/images/responsive/icons/weather/vector/infographic/en/1.svg';
 
-        console.dir(this.state.weather)
-        console.dir(this.state.astronomy)
+        const calculateCelsius = ((fahrenheit) => {
+            const fToC = Math.round(((fahrenheit - 32) * 5) / 9);
+            return `${fToC}`;
+        });
 
         var dateRegEx = /(\w{3})\,\s(\d{2})\s(\w{3})\s(\d{4})/g;
         const dateMod = dateRegEx.exec(weather.lastBuildDate) || [];
@@ -105,13 +94,52 @@ class Weather extends React.Component {
             )
         });
 
-        const windChill = weather.wind.chill;
+        function httpGetAsync(url, callback) {
+            var test = new XMLHttpRequest();
+            test.onreadystatechange = function () {
+                if (test.readyState == 4 && test.status == 200) {
+                    callback(url);
+                } else if (test.status >= 400) {
+                    console.error(test.status, test.statusText);
+                }
+            };
+            test.open("GET", url, true);
+            test.send(null);
+        };
+
+        function callback (url, error) {
+            if (error) {
+                console.error('Download error!', error)
+            } else {
+                document.getElementById('example').src = url;
+            }
+        };
+
+        function changeToFahrenheit(temp) {
+            temp = document.getElementById("changeMe").innerHTML;
+            const calculateFahrenheit = ((celsius) => {
+                const cToF = Math.round(celsius * 9 / 5 + 32);
+                return `${cToF}`;
+            });
+            calculateFahrenheit(temp);
+            return document.getElementById("changeMe").innerHTML = calculateFahrenheit(temp);
+        }
+
+        function changeToCelsius(temp) {
+            temp = document.getElementById("changeMe").innerHTML;
+            const calculateCelsius = ((fahrenheit) => {
+                const fToC = Math.round(fahrenheit * 9 / 5 + 32);
+                return `${fToC}`;
+            });
+            calculateCelsius(temp);
+            return document.getElementById("changeMe").innerHTML = calculateCelsius(temp);
+        }
 
         return (
             <div className="container">
                 <div className="app-info">
                     <h1>Weather App</h1>
-                    <p> {weather.description}</p>
+                    <p> {weather.description} </p>
                 </div>
                 <div className="today-info">
                     <img src={imageItem} />
@@ -119,7 +147,10 @@ class Weather extends React.Component {
                     <p> Date: {dateItem} </p>
                     <p> Weather Last Updated At: {timeItem} </p>
                     <p className="temperature">
-                        Temperature: {calculateCelsius(fahrenheit)}
+                        Temperature: <span id="changeMe">{calculateCelsius(fahrenheit)}</span>
+                        <button className="textChange" onClick={changeToFahrenheit}>
+                            <span id="convertedTemp">{this.changeToFahrenheit}</span>
+                        </button>
                     </p>
                     <p>
                         Sunrise: {weather.astronomy.sunrise} -
@@ -139,8 +170,8 @@ class Weather extends React.Component {
                         {forecast}
                     </div>
                 </div>
-                <div className="yahoo-ad">
-                    <img src={weather.image.url} />
+                <div className="yahoo-ad" id="yahoo">
+                    <img id="example" src={httpGetAsync(url, callback)} />
                 </div>
             </div>
         );
