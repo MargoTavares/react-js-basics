@@ -54,12 +54,6 @@ class Weather extends React.Component {
         const windChill = weather.wind.chill;
         const url = 'https://static.bbc.co.uk/weathermobile/0.1.1212/images/responsive/icons/weather/vector/infographic/en/1.svg';
         const degree = String.fromCharCode(176);
-        const letterF = "C";
-
-        const letterChange = ((letter) => {
-            letter === "C" ? letter == "F" : letter == "C";
-            return letter;
-        });
 
         const calculateCelsius = ((fahrenheit) => {
             const fToC = Math.round(((fahrenheit - 32) * 5) / 9);
@@ -93,8 +87,8 @@ class Weather extends React.Component {
                     <ul className="forecast-detail">
                         <p> {dailyForecast.day} </p>
                         <p> {dailyForecast.date}</p>
-                        <p> Low: {calculateCelsius(dailyForecast.low)} </p>
-                        <p> High: {calculateCelsius(dailyForecast.high)} </p>
+                        <p> Low: {calculateCelsius(dailyForecast.low)}{degree} C </p>
+                        <p> High: {calculateCelsius(dailyForecast.high)}{degree} C </p>
                     </ul>
                 </div>
             )
@@ -121,15 +115,40 @@ class Weather extends React.Component {
             }
         };
 
-        function changeToFahrenheit(temp) {
+        function changeTemp(temp, tempLetter) {
             temp = document.getElementById("changeMe").innerHTML;
+            tempLetter = document.getElementById("tempLetter").innerHTML;
+
             const calculateFahrenheit = ((celsius) => {
                 const cToF = Math.round(celsius * 9 / 5 + 32);
                 return `${cToF}`;
             });
-            calculateFahrenheit(temp);
-            return document.getElementById("changeMe").innerHTML = calculateFahrenheit(temp);
+
+            const letterChange = ((letter) => {
+                var change = letter === "F" ? "C" : "F";
+                return change;
+            });
+
+            const calculateCelsius = ((fahrenheit) => {
+                const fToC = Math.round(((fahrenheit - 32) * 5) / 9);
+                return `${fToC}`;
+            });
+
+            if (tempLetter === "C") {
+                calculateFahrenheit(temp);
+                return document.getElementById("changeMe").innerHTML = calculateFahrenheit(temp),
+                    document.getElementById("tempLetter").innerHTML = letterChange(tempLetter)
+
+            } else {
+                return document.getElementById("changeMe").innerHTML = calculateCelsius(temp),
+                    document.getElementById("tempLetter").innerHTML = letterChange(tempLetter)
+
+            }
         }
+
+        const letterC = "C";
+
+        console.log(weather);
 
         return (
             <div className="container">
@@ -137,33 +156,36 @@ class Weather extends React.Component {
                     <h1>WEATHER</h1>
                     <p> {weather.description} </p>
                 </div>
-                <div className="today-info">
-                    <img src={imageItem} />
-                    <p> Current Conditions: {conditions} </p>
-                    <p> Date: {dateItem} </p>
-                    <p> Weather Last Updated At: {timeItem} </p>
-                    <p className="temperature">
-                        Temperature: <span id="changeMe">{calculateCelsius(fahrenheit)}</span>
-                        <span>{degree}</span>
-                        <span>{letterChange(letter)}</span>
-                        <label className="switch" onClick={letterChange(letterF)}>
-                            <input type="checkbox" />
-                            <span className="slider round" onClick={changeToFahrenheit}></span>
-                        </label>
-                    </p>
-                    <p>
-                        Sunrise: {weather.astronomy.sunrise} -
-                        Sunset: {weather.astronomy.sunset}
-                    </p>
-                    <p>
-                        Humidity: {weather.atmosphere.humidity}% -
-                        Wind Chill: {calculateCelsius(windChill)}{degree}
-                    </p>
-                </div>
-                <div className="forecast-info">
-                    <h3> 10 Day Forecast </h3>
-                    <div className="forecast">
-                        {forecast}
+                <div className="contain-elements-for-weather">
+                    <div className="today-info">
+                        <h3> {dateItem} </h3>
+                        <img src={imageItem} className="weather-image"/>
+                        <p> {conditions} </p>
+                        <p> {timeItem} </p>
+                        <p className="temperature">
+                            Temperature: <span id="changeMe">{calculateCelsius(fahrenheit)}</span>
+                            <span>{degree}</span>
+                            <span id="tempLetter">{letterC}</span>
+                            &nbsp;
+                            <label className="switch">
+                                <input type="checkbox" />
+                                <span className="slider round" onClick={changeTemp}></span>
+                            </label>
+                        </p>
+                        <p>
+                            Sunrise: {weather.astronomy.sunrise} -
+                            Sunset: {weather.astronomy.sunset}
+                        </p>
+                        <p>
+                            Humidity: {weather.atmosphere.humidity}% -
+                            Wind Chill: {calculateCelsius(windChill)}{degree}
+                        </p>
+                    </div>
+                    <div className="forecast-info">
+                        <h3> 10 Day Forecast </h3>
+                        <div className="forecast">
+                            {forecast}
+                        </div>
                     </div>
                 </div>
                 <div className="yahoo-ad" id="yahoo">

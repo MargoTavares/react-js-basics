@@ -1,3 +1,5 @@
+@import "vars.scss";
+
 .app-info,
 .today-info,
 .forecast-info h3,
@@ -6,7 +8,7 @@
 }
 
 .container {
-    border: 2px solid rgb(177, 215, 236);
+    border: 2px solid $light-blue;
     border-radius: 10px;
     display: flex;
     justify-content: center;
@@ -24,11 +26,37 @@
     }
 }
 
+.contain-elements-for-weather {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 .today-info {
-    border: 2px solid rgb(177, 215, 236);
+    border: 2px solid $light-blue;
     border-radius: 12px;
     width: 40%;
     align-items: center;
+    order: 0;
+    font-size: 21px;
+    padding-top: 5px;
+}
+
+.weather-image {
+    height: 20%;
+    width: 20%;
+}
+
+.forecast-info {
+    margin-top: 0px;
+    width: 40%;
+    order: 1;
+    border: 2px solid $light-blue;
+    border-radius: 12px;
+
+    h3 {
+        font-size: 25px;
+    }
 }
 
 .forecast {
@@ -40,9 +68,10 @@
     border-radius: 12px;
     border: none;
     flex-wrap: wrap;
+    padding: 3px;
 
     .forecast {
-        border: 2px solid rgb(177, 215, 236);
+        border: 2px solid $light-blue;
     }
 }
 
@@ -51,8 +80,8 @@
 }
 
 .forecast:nth-child(odd) {
-    background-color: rgb(218, 223, 230);
-    border: 2px solid rgb(224, 197, 250);
+    background-color: $blue-grey;
+    border: 2px solid $light-purple;
 
 }
 
@@ -62,10 +91,14 @@
     }
 }
 
-.yahoo-ad {
+#yahoo-ad {
     display: flex;
     justify-content: center;
     margin-top: 30px;
     margin-bottom: 30px;
+}
+
+#example {
+    visibility: hidden;
 }
 
