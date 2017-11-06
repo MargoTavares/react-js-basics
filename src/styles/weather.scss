@@ -5,16 +5,15 @@
     text-align: center;
 }
 
-.container,
-.forecast,
-.yahoo-ad {
+.container {
+    border: 2px solid rgb(177, 215, 236);
+    border-radius: 10px;
     display: flex;
     justify-content: center;
-}
+    font-family: 'News Cycle', sans-serif;
+    flex-direction: column;
+    align-items: center;
 
-.container {
-    border: 2px solid blue;
-    border-radius: 10px;
     h1 {
         color: darkblue;
     }
@@ -23,34 +22,49 @@
         -webkit-padding-start: 0;
         padding: 5px;
     }
-
-    flex-direction: column;
 }
 
 .today-info {
-    border: 2px solid black;
+    border: 2px solid rgb(177, 215, 236);
     border-radius: 12px;
+    width: 40%;
+    align-items: center;
+}
+
+.forecast {
+    display: flex;
+    justify-content: center;
+    font-family: 'News Cycle', sans-serif;
+
+    flex-direction: row;
+    border-radius: 12px;
+    border: none;
+    flex-wrap: wrap;
+
+    .forecast {
+        border: 2px solid rgb(177, 215, 236);
+    }
+}
+
+.forecast:nth-child(even) {
+    border-radius: 12px;
+}
+
+.forecast:nth-child(odd) {
+    background-color: rgb(218, 223, 230);
+    border: 2px solid rgb(224, 197, 250);
 
 }
 
-.forecast-info {
-    .forecast {
-        flex-direction: row;
-        border: 2px solid black;
-    }
-
-    .forecast:nth-child(odd) {
-        background-color: #B8BCC1;
-    }
-
-    .forecast-detail {
-        p {
-            width: 100%;
-        }
+.forecast-detail {
+    p {
+        width: 100%;
     }
 }
 
 .yahoo-ad {
+    display: flex;
+    justify-content: center;
     margin-top: 30px;
     margin-bottom: 30px;
 }

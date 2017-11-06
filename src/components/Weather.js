@@ -53,6 +53,13 @@ class Weather extends React.Component {
         const fahrenheit = weather.item.condition.temp;
         const windChill = weather.wind.chill;
         const url = 'https://static.bbc.co.uk/weathermobile/0.1.1212/images/responsive/icons/weather/vector/infographic/en/1.svg';
+        const degree = String.fromCharCode(176);
+        const letterF = "C";
+
+        const letterChange = ((letter) => {
+            letter === "C" ? letter == "F" : letter == "C";
+            return letter;
+        });
 
         const calculateCelsius = ((fahrenheit) => {
             const fToC = Math.round(((fahrenheit - 32) * 5) / 9);
@@ -84,11 +91,10 @@ class Weather extends React.Component {
             return (
                 <div className="forecast" key={key}>
                     <ul className="forecast-detail">
-                        <p> {dailyForecast.day} - {dailyForecast.date}</p>
-                        <p>
-                            Low: {calculateCelsius(dailyForecast.low)}
-                            High: {calculateCelsius(dailyForecast.high)}
-                        </p>
+                        <p> {dailyForecast.day} </p>
+                        <p> {dailyForecast.date}</p>
+                        <p> Low: {calculateCelsius(dailyForecast.low)} </p>
+                        <p> High: {calculateCelsius(dailyForecast.high)} </p>
                     </ul>
                 </div>
             )
@@ -125,20 +131,10 @@ class Weather extends React.Component {
             return document.getElementById("changeMe").innerHTML = calculateFahrenheit(temp);
         }
 
-        function changeToCelsius(temp) {
-            temp = document.getElementById("changeMe").innerHTML;
-            const calculateCelsius = ((fahrenheit) => {
-                const fToC = Math.round(fahrenheit * 9 / 5 + 32);
-                return `${fToC}`;
-            });
-            calculateCelsius(temp);
-            return document.getElementById("changeMe").innerHTML = calculateCelsius(temp);
-        }
-
         return (
             <div className="container">
                 <div className="app-info">
-                    <h1>Weather App</h1>
+                    <h1>WEATHER</h1>
                     <p> {weather.description} </p>
                 </div>
                 <div className="today-info">
@@ -148,9 +144,12 @@ class Weather extends React.Component {
                     <p> Weather Last Updated At: {timeItem} </p>
                     <p className="temperature">
                         Temperature: <span id="changeMe">{calculateCelsius(fahrenheit)}</span>
-                        <button className="textChange" onClick={changeToFahrenheit}>
-                            <span id="convertedTemp">{this.changeToFahrenheit}</span>
-                        </button>
+                        <span>{degree}</span>
+                        <span>{letterChange(letter)}</span>
+                        <label className="switch" onClick={letterChange(letterF)}>
+                            <input type="checkbox" />
+                            <span className="slider round" onClick={changeToFahrenheit}></span>
+                        </label>
                     </p>
                     <p>
                         Sunrise: {weather.astronomy.sunrise} -
@@ -158,10 +157,7 @@ class Weather extends React.Component {
                     </p>
                     <p>
                         Humidity: {weather.atmosphere.humidity}% -
-                        Wind Chill:
-                            <span className="wind-chill">
-                                {calculateCelsius(windChill)}
-                            </span>
+                        Wind Chill: {calculateCelsius(windChill)}{degree}
                     </p>
                 </div>
                 <div className="forecast-info">
