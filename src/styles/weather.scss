@@ -2,7 +2,6 @@
 
 .app-info,
 .today-info,
-.forecast-info h3,
 .forecast-detail p {
     text-align: center;
 }
@@ -15,6 +14,7 @@
     font-family: 'News Cycle', sans-serif;
     flex-direction: column;
     align-items: center;
+    padding-bottom: 10px;
 
     h1 {
         color: darkblue;
@@ -22,12 +22,13 @@
 
     ul, menu, dir {
         -webkit-padding-start: 0;
-        padding: 5px;
+        padding: 0px;
     }
 }
 
+
 .contain-elements-for-weather {
-    width: 100%;
+    width: 95%;
     display: flex;
     justify-content: center;
 }
@@ -35,53 +36,53 @@
 .today-info {
     border: 2px solid $light-blue;
     border-radius: 12px;
-    width: 40%;
+    width: 20%;
     align-items: center;
     order: 0;
-    font-size: 21px;
-    padding-top: 5px;
+    font-size: 15px;
+    padding-top: 0px;
 }
 
 .weather-image {
-    height: 20%;
+    height: 15%;
     width: 20%;
 }
 
-.forecast-info {
+.forecast {
     margin-top: 0px;
-    width: 40%;
+    width: 75%;
     order: 1;
     border: 2px solid $light-blue;
     border-radius: 12px;
 
-    h3 {
-        font-size: 25px;
-    }
-}
-
-.forecast {
     display: flex;
     justify-content: center;
     font-family: 'News Cycle', sans-serif;
 
     flex-direction: row;
-    border-radius: 12px;
-    border: none;
-    flex-wrap: wrap;
-    padding: 3px;
+    flex-wrap: nowrap;
 
     .forecast {
         border: 2px solid $light-blue;
+
     }
+}
+
+.forecast:first-child {
+    display: none;
 }
 
 .forecast:nth-child(even) {
     border-radius: 12px;
+    background-color: $white;
+    padding: 5px;
+
 }
 
 .forecast:nth-child(odd) {
     background-color: $blue-grey;
     border: 2px solid $light-purple;
+    padding: 5px;
 
 }
 
@@ -101,4 +102,19 @@
 #example {
     visibility: hidden;
 }
+
+.weather-sprite {
+    object-fit: none;
+    object-position: 0 ;
+    width: 75px;
+    height: 80px;
+
+    &#28 {
+        object-position: 0 0;
+    }
+}
+
+
+
+
 

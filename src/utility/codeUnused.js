@@ -61,3 +61,10 @@ function changeTemp(temp, tempLetter) {
         letterChange(tempLetter);
         return document.getElementById("tempLetter").innerHTML = letterChange(tempLetter);
 }
+
+///////// Yahoo image using xml
+<div className="yahoo-ad" id="yahoo">
+        <img id="example" src={httpGetAsync(url, callback)} />
+</div>
+
+// <input value={this.state.inputValue} onChange={inputCity => this.Weather(inputCity)} />
