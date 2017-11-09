@@ -5,6 +5,7 @@ import Gif from "../components/Gif.js";
 import Weather from "../components/Weather.js";
 import GifList from "../components/GifList.js";
 import GifModal from "../components/GifModal.js";
+import Calendar from "../components/Calendar.js";
 import request from 'superagent';
 
 class App extends React.Component {
@@ -43,6 +44,7 @@ class App extends React.Component {
         return (
             <div>
                 <Weather />
+                <Calendar />
                 <Gif onTermChange={this.handleTermChange.bind(this)} />
                 <GifList gifs={this.state.gifs}
                          onGifSelect={ selectedGif => this.openModal(selectedGif) } />
